@@ -30,10 +30,10 @@ class test_fileStorage(unittest.TestCase):
 
     def test_new(self):
         """ New object is correctly added to __objects """
-        new = BaseModel()
-        for obj in storage.all().values():
-            temp = obj
-        self.assertTrue(temp is obj)
+        obj = BaseModel()
+        storage.new(obj)
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        self.assertIn(key, storage.all())
 
     def test_all(self):
         """ __objects is properly returned """
