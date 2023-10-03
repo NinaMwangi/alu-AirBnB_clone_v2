@@ -9,7 +9,7 @@ class test_state(test_basemodel):
     """ test_state to test the state class """
 
     def __init__(self, *args, **kwargs):
-        """ initaialises a test_state object"""
+        """ initialises a test_state object"""
         super().__init__(*args, **kwargs)
         self.name = "State"
         self.value = State
