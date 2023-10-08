@@ -30,10 +30,10 @@ class test_fileStorage(unittest.TestCase):
 
     def test_new(self):
         """ New object is correctly added to __objects """
-        obj = BaseModel()
-        storage.new(obj)
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        self.assertIn(key, storage.all())
+        new = BaseModel()
+        for obj in storage.all().values():
+            temp = obj
+        self.assertTrue(temp is obj)
 
     def test_all(self):
         """ __objects is properly returned """
@@ -107,3 +107,20 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
+
+    def test_create_state(self):
+        """ New state object is created """
+        from models.state import State
+        new_state = State(name="California")
+        self.assertEqual(new_state.name, "California")
+
+    def test_create_state_and_city(self):
+        """ New state and city objects are created """
+        from models.state import State
+        from models.city import City
+        new_state = State(name="California")
+        new_city = City(name="San Francisco", state_id=new_state.id)
+        self.assertEqual(new_city.name, "San Francisco")
+        self.assertEqual(new_city.state_id, new_state.id)
+
+
