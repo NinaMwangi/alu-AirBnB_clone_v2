@@ -25,15 +25,6 @@ class FileStorage:
         """Adds new object to storage dictionary"""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 
-    def delete(self, obj=None):
-        """Deletes obj from __objects"""
-        if obj is not None:
-            obj_dic = FileStorage.__objects
-            for key in obj_dic:
-                if (obj_dic[key] == obj):
-                    del obj_dic[key]
-                    break
-
     def save(self):
         """Saves storage dictionary to file"""
         with open(FileStorage.__file_path, 'w') as f:
@@ -54,10 +45,10 @@ class FileStorage:
         from models.review import Review
 
         classes = {
-            'BaseModel': BaseModel, 'User': User, 'Place': Place,
-            'State': State, 'City': City, 'Amenity': Amenity,
-            'Review': Review
-        }
+                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                    'State': State, 'City': City, 'Amenity': Amenity,
+                    'Review': Review
+                  }
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
@@ -67,6 +58,15 @@ class FileStorage:
         except FileNotFoundError:
             pass
 
+    def delete(self, obj=None):
+        """ Deletes obj from __objects """
+        if obj is not None:
+            obj_dic = FileStorage.__objects
+            for key in obj_dic:
+                if (obj_dic[key] == obj):
+                    del obj_dic[key]
+                    break
+
     def close(self):
-        """Deserialize the JSON file to objects"""
+        """Calls the reload method of FileStorage"""
         self.reload()
